@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/icp-pickagovpn-backend"
+]
+resolver = "2"

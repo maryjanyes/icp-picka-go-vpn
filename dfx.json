@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "icp-pickagovpn-backend": {
+      "candid": "src/icp-pickagovpn-backend/icp-pickagovpn-backend.did",
+      "package": "icp-pickagovpn-backend",
+      "type": "rust"
+    },
+    "icp-pickagovpn-frontend": {
+      "dependencies": [
+        "icp-pickagovpn-backend"
+      ],
+      "source": [
+        "src/icp-pickagovpn-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "icp-pickagovpn-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
