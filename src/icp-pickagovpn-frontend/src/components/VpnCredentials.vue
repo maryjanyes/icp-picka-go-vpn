@@ -1,8 +1,14 @@
 <script>
+    import { icp_pickagovpn_backend } from '../../../declarations/icp-pickagovpn-backend/index';
+
     export default {
         methods: {
             joinVpn() {
-                console.log('role...', selectedVpnRole)
+                if (connectedIDVPNRole === 'CUSTOMER') {
+                    icp_pickagovpn_backend.create_vault('CUSTOMER');
+                } else {
+                    icp_pickagovpn_backend.create_vault('RENTER');
+                }
             },
             download() {
                 if (connectedIDVPNRole === 'CUSTOMER') {
@@ -17,7 +23,7 @@
 <script setup>
     import { ref } from 'vue';
 
-    const userAuthProperties = defineProps({
+    const props = defineProps({
         connectedIcpId: String,
     });
     const userVpnConnectedProperties = ref({
@@ -26,7 +32,7 @@
         rentedVpnIps: [],
         credits: null,
     });
-    const selectedVpnRole = ref();
+    const selectedVpnRole = ref('CUSTOMER');
 </script>
 
 <template>
@@ -36,16 +42,17 @@
             Connected ICP Account: 
         </span>
         <span class="text-white text-sm">
-            {{ userAuthProperties.connectedIcpId }}
+            {{ props.connectedIcpId }}
         </span>
     </div>
     <div v-if="!userVpnConnectedProperties.role" class="flex flex-col gap-5">
-        <label class="text-white text-2sm font-bold">
+        <p class="text-white text-sm font-semibold">It looks like you still not have active VPN Profile</p>
+        <p class="text-white text-2sm font-bold">
             Join Picka VPN on ICP now and try 10 FREE credits on Testnet!
-        </label>
+        </p>
         <div class="flex flex-row gap-5">
             <select v-model="selectedVpnRole" class="field-select">
-                <option value="" selected>Select Role</option>
+                <option value="">Select Role</option>
                 <option value="CUSTOMER">CUSTOMER</option>
                 <option value="RENTER">RENTER</option>
             </select>

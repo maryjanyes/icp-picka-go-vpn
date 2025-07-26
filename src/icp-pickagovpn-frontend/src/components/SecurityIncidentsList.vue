@@ -16,6 +16,13 @@
 <script setup>
     import { ref } from 'vue';
     
+    const columnNames = {
+        context: 'Context',
+        timestamp: 'Timestamp',
+        attackType: 'Attack type',
+        threatLevel: 'Threat level',
+        status: 'Attack status',
+    };
     const incidentColumns = ['context', 'timestamp', 'attackType', 'threatLevel', 'status'];
     const incidents = ref([{
         context: 'Man in a middle attack',
@@ -49,7 +56,7 @@
             <li>
                 <ul class="flex flex-row gap-4">
                     <li v-for="c in incidentColumns" class="w-50">
-                        <span class="text-white text-sm font-semibold">{{ c }}</span>
+                        <span class="text-white text-sm font-semibold">{{ columnNames[c] }}</span>
                     </li>
                 </ul>
             </li>

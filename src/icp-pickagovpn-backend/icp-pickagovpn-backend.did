@@ -1,3 +1,6 @@
 service : {
-    "greet": (text) -> (text) query;
+    "get_vault": () -> (text) query;
+    "create_vault": (vault_role: text) -> ();
+    "rent_ip_server": () -> ();
+    "dedicate_ip_server": (ip: text, username: text, pass: text, salt: text) -> ();
 }

@@ -1,42 +1,7 @@
-<script>
-    export default {
-        methods: {
-            connect() {
-                authClient?.login({
-                    identityProvider,
-                    onSuccess: updateActor
-                }); 
-            }
-        },
-    }
-</script>
 <script setup>
-    import { AuthClient } from '@dfinity/auth-client';
-    import { createActor, canisterId } from '../../../declarations/icp-pickagovpn-backend';
- 
-    const updateActor = (act) => {
-        console.log('act...', act);
-    };
-    const network = process.env.DFX_NETWORK;
-    let authClient;
-    let identity;
-    let actor;
-    let isAuthenticated;
-
-    AuthClient.create().then((client) => {
-        authClient = client;
-        identity = authClient.getIdentity();
-        actor = createActor(canisterId, {
-            agentOptions: {
-                identity
-            }
-        });
-        isAuthenticated = authClient.isAuthenticated();
+    const props = defineProps({
+        connect: Function,
     });
-    const identityProvider =
-        network === 'ic'
-            ? 'https://identity.ic0.app'
-            : 'http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943';
 </script>
 
 <template>
@@ -46,7 +11,7 @@
             <img src="/logo.png" alt="PickaGoVPN Logo" />
             <span>Picka Go VPN</span>
         </div>
-        <button @click="connect" class="connect-button">Connect wallet</button>
+        <button @click="props.connect" class="connect-button">Connect wallet</button>
     </div>
   </header>
 </template>

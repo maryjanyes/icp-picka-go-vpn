@@ -1,26 +1,52 @@
 <script setup>
-import SiteHeader from './components/Header.vue';
-import SiteFooter from './components/Footer.vue';
-import SecurityIncidentsList from './components/SecurityIncidentsList.vue';
-import Stats from './components/Stats.vue';
-import VpnCredentials from './components/VpnCredentials.vue';
-// import { icp_picka_go_vpn_backend } from 'declarations/icp-picka-go-vpn-backend/index';
+  import SiteHeader from './components/Header.vue';
+  import SiteFooter from './components/Footer.vue';
+  import SecurityIncidentsList from './components/SecurityIncidentsList.vue';
+  import Stats from './components/Stats.vue';
+  import VpnCredentials from './components/VpnCredentials.vue';
+  import { ref } from 'vue';
+  import { AuthClient } from '@dfinity/auth-client';
+  import { createActor, canisterId } from '../../declarations/icp-pickagovpn-backend';
 
-async function handleSubmit(e) {
-  e.preventDefault();
-  const target = e.target;
-  const name = target.querySelector('#name').value;
-  /* await icp_picka_go_vpn_backend.greet(name).then((response) => {
-    greeting.value = response;
-  }); */
-}
+  let authClient;
+    let identity = ref(null);
+    let actor;
+    let isAuthenticated;
+
+    const network = process.env.DFX_NETWORK;
+    const identityProvider =
+        network === 'ic'
+            ? 'https://identity.ic0.app'
+            : 'http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943';
+
+  const updateClient = () => {
+    AuthClient.create().then((client) => {
+      authClient = client;
+      identity = authClient.getIdentity();
+      actor = createActor(canisterId, {
+        agentOptions: {
+          identity,
+        },
+      });
+      isAuthenticated = authClient.isAuthenticated();
+    });
+  };
+
+  updateClient();
+
+  const connectIdentity = () => {
+    authClient?.login({
+      identityProvider,
+      onSuccess: updateClient,
+    }); 
+  };
 </script>
 
 <template>
   <main>
     <div class="flex flex-col gap-10 pl-15 pr-15">
-      <SiteHeader />
-      <VpnCredentials connected-icp-id="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" />
+      <SiteHeader :connect="connectIdentity" />
+      <VpnCredentials connected-icp-id="identity" />
       <Stats />
       <SecurityIncidentsList />
       <SiteFooter />
