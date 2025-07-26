@@ -1,7 +1,3 @@
-<script setup>
-    // todo
-</script>
-
 <template>
   <footer>
     <div class="header-row">

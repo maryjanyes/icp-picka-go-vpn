@@ -1,18 +1,3 @@
-<script>
-    export default {
-        methods: {
-            prev() {
-                //   
-            },
-            next() {
-                //
-            },
-            applySearchFilter() {
-                //
-            }
-        },
-    }
-</script>
 <script setup>
     import { ref } from 'vue';
     

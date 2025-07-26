@@ -1,20 +1,20 @@
 <script>
-    import { icp_pickagovpn_backend } from '../../../declarations/icp-pickagovpn-backend/index';
+    import { icp_pickagovpn_backend } from '../../declarations/icp-pickagovpn-backend/index';
 
     export default {
         methods: {
             joinVpn() {
                 if (connectedIDVPNRole === 'CUSTOMER') {
+                    // todo: fix and make it work
                     icp_pickagovpn_backend.create_vault('CUSTOMER');
                 } else {
                     icp_pickagovpn_backend.create_vault('RENTER');
                 }
             },
             download() {
+                // todo: fix and make it work
                 if (connectedIDVPNRole === 'CUSTOMER') {
-                    // todo: download client VPN
                 } else {
-                    // todo: download VPN command line tool
                 }
             },
         },
