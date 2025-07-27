@@ -1,0 +1,6 @@
+service : {
+    "get_vault": () -> (text) query;
+    "create_vault": () -> ();
+    "rent_ip_server": () -> ();
+    "dedicate_ip_server": (ip: text, username: text, pass: text, salt: text) -> ();
+}

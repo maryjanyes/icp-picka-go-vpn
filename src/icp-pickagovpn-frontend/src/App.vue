@@ -6,7 +6,7 @@
   import VpnCredentials from './components/VpnCredentials.vue';
   import { ref } from 'vue';
   import { AuthClient } from '@dfinity/auth-client';
-  import { createActor, canisterId } from '../../declarations/icp-pickagovpn-backend';
+  import { createActor, canisterId } from '../declarations/icp-pickagovpn-backend';
 
   let authClient;
     let identity = ref(null);
